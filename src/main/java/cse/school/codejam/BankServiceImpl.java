@@ -22,6 +22,9 @@ public class BankServiceImpl implements BankService {
             throw new IllegalArgumentException("Deposit amount must be positive.");
         }
         BankAccount account = accountRepository.getAccount(accountNumber);
+        if (account == null) {
+            throw new IllegalArgumentException("Account does not exist.");
+        }
         account.deposit(amount);
         Transaction transaction = new Transaction()
                 .setType(Transaction.TransactionType.DEPOSIT)
